@@ -1,0 +1,32 @@
+This is a plugin for PS3 Media Server to support AudioBox.fm, a cloud streaming service.
+
+You can view a demo here: http://www.youtube.com/watch?v=1NgmU-qVB-E
+
+IMPORTANT NOTICE
+----------------
+
+This plugin uses the official AudioBox.fm Java library (https://github.com/audiobox/AudioBox.fm-JavaLib), which is licensed under GPL.
+
+INSTALL (Binary)
+----------------
+
+Download the jar file (which includes all dependencies) from Download section, put it under plugins/ directory of PS3 Media Server (PMS).
+Note that only the latest beta/dev version of PMS supports "AdditionalFolderAtRoot" plugins.
+
+For Mac OS X users, you need to open the .app bundle, put the file there, AND add a line: "<string>$JAVAROOT/plugins/audiobox.jar</string>" right after the line: "<string>$JAVAROOT/PMS.jar</string>" in Info.plist. This is a limitation of OS X's Java stub launcher.
+
+On first launch, go to the Plugin System settings of PMS, click the "AudioBox.fm" button, enter your credentials, SAVE, and optionally restart PMS (as PMS only initialize plugin once during startup).
+
+COMPILING
+---------
+
+Just run "ant" (you may need to edit build.xml to point to the correct location of PMS.jar)
+
+Optionally, you could build a newer version of AudioBox.fm-JavaLib and put the jar into lib/ (Note that you should either build AudioBox.fm-JavaLib without HTTPS support, or configure your Java key store to accept the CA of api.audiobox.fm)
+
+KNOWN ISSUES
+------------
+
+The plugin passes raw stream to MPlayer for transcoding, for some reason some files hosted on AudioBox.fm won't play back after transcoding. (Probably a configuration issue in PMS's MPlayer encoder)
+
+Have fun!

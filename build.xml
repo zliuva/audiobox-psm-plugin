@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AudioBox" default="build">
+	<!-- set to your pms path -->
+	<property name="pms" value="../ps3mediaserver" />
+	<property name="pms.jar" value="${pms}/pms.jar" />
+	<property name="plugins" value="${pms}/plugins/" />
+	
+	<property name="audiobox.jar" value="audiobox.jar" />
+
+	<path id="lib.path.ref">
+		<fileset id="libs.ref" dir="lib" includes="*.jar" excludes="*source*.*"/>
+	</path>
+	
+	<target name="clean">
+		<delete dir="classes" quiet="true" />
+		<delete file="${audiobox.jar}" quiet="true" />
+	</target>
+
+    <target name="build" depends="clean">
+		<mkdir dir="classes" />
+		<javac srcdir="src" destdir="classes" target="1.5" classpathref="lib.path.ref" debug="on" debuglevel="lines,vars,source">
+			<classpath>
+				<pathelement location="${pms.jar}"/>
+			</classpath>
+		</javac>
+
+	    <jar basedir="classes" destfile="${audiobox.jar}" compress="off" duplicate="preserve">	
+	    	<zipgroupfileset refid="libs.ref" />
+			<fileset file="plugin" />
+		</jar>
+    </target>
+
+	<target name="deploy" depends="build">
+		<copy file="${audiobox.jar}" todir="${plugins}" overwrite="true" />
+	</target>
+</project>
